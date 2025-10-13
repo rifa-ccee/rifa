@@ -4,20 +4,59 @@
     box-sizing: border-box;
 }
 
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: hidden;
+}
+
+#root {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
 .rifa-container {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: flex-start;
-    min-height: 100vh;
-    padding: 0; /* removed padding to allow header full width */
+    height: calc(100vh - 120px);
+    overflow-y: auto;
+    scroll-behavior: auto; /* Cambio de smooth a auto para scroll más rápido */
+    scroll-snap-type: y mandatory;
+    padding: 0;
 }
 
 .rifa-content {
     width: 100%;
     max-width: 1200px;
-    padding: 10px; /* padding only for content, not header */
+    padding: 10px 10px; /* Reducido padding */
     box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Centrar verticalmente el contenido */
+    align-items: center; /* Centrar horizontalmente el contenido */
+    height: calc(100vh - 120px); /* Altura exacta */
+    min-height: calc(100vh - 120px);
+    max-height: calc(100vh - 120px);
+    background-color: #eeeeee;
+    animation: slideInUp 0.8s ease-out;
+    scroll-snap-align: start; /* Snap point */
+    overflow-y: auto; /* Scroll interno si el contenido es muy largo */
+    margin: 0 auto;
+}
+
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .app-logo {
@@ -34,7 +73,9 @@
 
 /* ====== HEADER ====== */
 .title-container {
-    position: relative;
+    position: sticky;
+    top: 0;
+    z-index: 100;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -43,11 +84,15 @@
     right: 0;
     margin: 0;
     gap: 20px;
-    padding: 15px 30px;
+    padding: 10px 30px;
     border-bottom: 2px solid #e0e0e0;
     background-color: #ffffff;
     box-sizing: border-box;
+    flex-shrink: 0;
+    transition: none; /* Eliminado efecto de transición */
 }
+
+/* Eliminados estilos de .title-container.scrolled */
 
 /* Logo */
 .logo-slot {
@@ -77,9 +122,149 @@
 
 .logo-slot img {
     display: block;
-    height: 140px; /* increased for larger logo */
+    height: 100px;
     width: auto;
     object-fit: contain;
+}
+
+/* Eliminado efecto de reducción del logo al hacer scroll */
+
+/* ====== SECCIÓN INFORMATIVA ====== */
+.info-section {
+    width: 100%;
+    height: calc(100vh - 120px); /* Altura exacta del viewport disponible */
+    min-height: calc(100vh - 120px);
+    max-height: calc(100vh - 120px);
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); /* Cambio a tonos grises/azules suaves */
+    padding: 40px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    position: relative;
+    overflow: hidden;
+    scroll-snap-align: start; /* Snap point para esta sección */
+}
+
+/* Efecto parallax de fondo */
+.info-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+        radial-gradient(circle at 20% 50%, rgba(66, 135, 245, 0.08) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(66, 135, 245, 0.08) 0%, transparent 50%);
+    opacity: 0.6;
+    animation: moveBackground 20s ease-in-out infinite;
+}
+
+@keyframes moveBackground {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+}
+
+.info-toggle {
+    display: none; /* Ocultamos el botón toggle */
+}
+
+.info-content {
+    max-width: 1200px;
+    width: 100%;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 30px;
+    animation: fadeIn 0.6s ease-out;
+    position: relative;
+    z-index: 1;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.info-card, .prizes-card {
+    background-color: #ffffff;
+    border-radius: 12px;
+    padding: 25px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid #e0e0e0;
+}
+
+.info-card:hover, .prizes-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.info-card h2, .prizes-card h2 {
+    color: #2c5282; /* Azul oscuro en lugar de morado */
+    font-size: 1.8rem;
+    margin-bottom: 15px;
+    font-weight: 700;
+}
+
+.info-card p {
+    color: #555;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin: 0;
+}
+
+.prizes-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 20px 0;
+}
+
+.prizes-list li {
+    background-color: #f8f9fa;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    border-left: 4px solid #4287f5; /* Azul en lugar de morado */
+    transition: background-color 0.2s ease;
+}
+
+.prizes-list li:hover {
+    background-color: #e9ecef;
+}
+
+.prize-position {
+    display: inline-block;
+    font-weight: 700;
+    color: #2c5282; /* Azul oscuro en lugar de morado */
+    min-width: 100px;
+    font-size: 1.1rem;
+}
+
+.prize-description {
+    color: #333;
+    font-size: 1rem;
+}
+
+.draw-date {
+    background-color: #fff3cd;
+    padding: 12px;
+    border-radius: 8px;
+    border-left: 4px solid #ffc107;
+    color: #856404;
+    font-size: 1.05rem;
+    margin: 0;
+}
+
+.draw-date strong {
+    color: #664d03;
 }
 
 /* Make sure title stays centered by using absolute positioning trick on small screens */
@@ -146,9 +331,9 @@
 
 .rifa-table-wrapper {
     width: 100%;
-    max-width: 980px; /* match header max-width */
-    margin: 0 auto;
-    overflow-x: auto;
+    max-width: 980px;
+    margin: 0 auto 8px; /* Reducido margen */
+    min-height: auto; /* Eliminado altura mínima fija */
     border: 2px solid #333;
     border-radius: 8px;
 }
@@ -157,10 +342,11 @@
     display: flex;
     align-items: center;
     width: 100%;
-    max-width: 980px; /* match table width */
-    margin: 12px auto;
+    max-width: 980px;
+    margin: 0 auto 8px; /* Reducido margen */
     gap: 12px;
     padding: 0 8px;
+    flex-shrink: 0;
 }
 .rifa-controls > div {
     margin: 0 auto; /* center the carousel group */
@@ -207,21 +393,24 @@
 }
 
 .rifa-form {
-    margin-top: 20px;
+    margin-top: 8px;
+    margin-bottom: 8px;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 8px; /* Reducido gap */
     width: 95%;
     max-width: 400px;
+    flex-shrink: 0;
 }
 
 .rifa-form h2 {
     text-align: center;
     font-size: 1.2rem;
+    margin: 0; /* Eliminado margin */
 }
 
 .rifa-form input, .rifa-form button {
-    padding: 12px;
+    padding: 10px; /* Reducido padding */
     font-size: 16px;
     border-radius: 5px;
     border: 1px solid #ccc;
@@ -307,8 +496,26 @@
 /* --- ESTILOS PARA ESCRITORIO (Computadores) --- */
 
 @media (min-width: 768px) {
-    .rifa-container {
-        padding: 40px;
+    /* Info section responsive */
+    .info-content {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .info-card h2, .prizes-card h2 {
+        font-size: 2rem;
+    }
+
+    .info-card p {
+        font-size: 1.15rem;
+    }
+
+    .prize-position {
+        min-width: 120px;
+        font-size: 1.15rem;
+    }
+
+    .prize-description {
+        font-size: 1.05rem;
     }
     
     .app-logo {

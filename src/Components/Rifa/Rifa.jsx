@@ -182,7 +182,7 @@ const Rifa = () => {
               src={`${process.env.PUBLIC_URL}/logotexto.png`}
               alt="Logotipo - Rifa"
               title="ICINF"
-              style={{ maxHeight: '140px', maxWidth: '100%' }}
+              className="header-logo"
             />
           </a>
         </div>
@@ -199,8 +199,48 @@ const Rifa = () => {
         </div>
       </header>
 
-      {/* CONTENIDO PRINCIPAL */}
+      {/* CONTENEDOR PRINCIPAL CON SCROLL */}
       <div className="rifa-container">
+        {/* SECCIÓN INFORMATIVA - PRIMERA PANTALLA */}
+        <div className="info-section">
+          <div className="info-content">
+            <div className="info-card">
+              <h2>🎯 Sobre la Rifa</h2>
+              <p>
+                Esta rifa solidaria tiene como objetivo apoyar a los estudiantes de Ingeniería Civil Informática 
+                en sus actividades académicas y proyectos de fin de carrera. Tu participación contribuye 
+                directamente al desarrollo de futuros profesionales de la tecnología.
+              </p>
+            </div>
+            
+            <div className="prizes-card">
+              <h2>🏆 Premios</h2>
+              <ul className="prizes-list">
+                <li>
+                  <span className="prize-position">1er Premio:</span>
+                  <span className="prize-description">Laptop HP Pavilion 15.6" + Mouse Gamer</span>
+                </li>
+                <li>
+                  <span className="prize-position">2do Premio:</span>
+                  <span className="prize-description">Tablet Samsung Galaxy Tab + Audífonos Bluetooth</span>
+                </li>
+                <li>
+                  <span className="prize-position">3er Premio:</span>
+                  <span className="prize-description">Smartwatch + Powerbank 20,000mAh</span>
+                </li>
+              </ul>
+              <p className="draw-date">📅 <strong>Sorteo:</strong> 15 de Diciembre, 2025</p>
+            </div>
+            
+            <div style={{ textAlign: 'center', marginTop: '20px' }}>
+              <p style={{ color: '#2c5282', fontSize: '1.2rem', fontWeight: 600, marginBottom: '10px' }}>
+                ⬇️ Desplázate hacia abajo para ver los números disponibles
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* SECCIÓN DE LA TABLA - SEGUNDA PANTALLA */}
         <div className="rifa-content">
           <div className="rifa-table-wrapper">
             <table className="rifa-table">
@@ -239,7 +279,7 @@ const Rifa = () => {
             </div>
           )}
         </div>
-      </div>
+      </div> {/* Cierre de rifa-container */}
     </>
   );
 };
