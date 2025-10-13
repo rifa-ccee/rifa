@@ -121,7 +121,7 @@ const Rifa = () => {
       return;
     }
     const sortedData = Object.entries(numberData).sort((a, b) => parseInt(a[0], 10) - parseInt(b[0], 10));
-    let fileContent = "Lista de Números Vendidos - Rifa Club de Pesca Río Toltén\n";
+    let fileContent = "Lista de Números Vendidos - Rifa Solidaria ICINF\n";
     fileContent += "========================================================\n\n";
     sortedData.forEach(([numeroRifa, data]) => {
       fileContent += `Número ${numeroRifa}: ${data.nombre} | Tel: ${data.telefono || ''} | Vendido por: ${data.vendedor || ''}\n`;
@@ -205,11 +205,10 @@ const Rifa = () => {
         <div className="info-section">
           <div className="info-content">
             <div className="info-card">
-              <h2>🎯 Sobre la Rifa</h2>
+              <h2>Sobre la Rifa</h2>
               <p>
-                Esta rifa solidaria tiene como objetivo apoyar a los estudiantes de Ingeniería Civil Informática 
-                en sus actividades académicas y proyectos de fin de carrera. Tu participación contribuye 
-                directamente al desarrollo de futuros profesionales de la tecnología.
+                Esta rifa solidaria tiene como objetivo apoyar a un estudiante de Ingeniería Civil Informática 
+                que se vio afectado por un incendio en su vivienda.
               </p>
             </div>
             
@@ -218,23 +217,31 @@ const Rifa = () => {
               <ul className="prizes-list">
                 <li>
                   <span className="prize-position">1er Premio:</span>
-                  <span className="prize-description">Laptop HP Pavilion 15.6" + Mouse Gamer</span>
+                  <span className="prize-description">Raspberry Pi 4 (8GB RAM)</span>
                 </li>
                 <li>
                   <span className="prize-position">2do Premio:</span>
-                  <span className="prize-description">Tablet Samsung Galaxy Tab + Audífonos Bluetooth</span>
+                  <span className="prize-description">Premio sorpresa</span>
                 </li>
                 <li>
                   <span className="prize-position">3er Premio:</span>
-                  <span className="prize-description">Smartwatch + Powerbank 20,000mAh</span>
+                  <span className="prize-description">Premio sorpresa</span>
+                </li>
+                <li>
+                    <span className="prize-position">4to Premio:</span>
+                    <span className="prize-description">Premio sorpresa</span>
+                </li>
+                <li>
+                    <span className="prize-position">5to Premio:</span>
+                    <span className="prize-description">Premio sorpresa</span>
                 </li>
               </ul>
-              <p className="draw-date">📅 <strong>Sorteo:</strong> 15 de Diciembre, 2025</p>
+              
             </div>
             
             <div style={{ textAlign: 'center', marginTop: '20px' }}>
               <p style={{ color: '#2c5282', fontSize: '1.2rem', fontWeight: 600, marginBottom: '10px' }}>
-                ⬇️ Desplázate hacia abajo para ver los números disponibles
+                Desplázate hacia abajo para ver los números disponibles
               </p>
             </div>
           </div>
