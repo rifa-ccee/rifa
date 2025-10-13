@@ -31,6 +31,7 @@ const Rifa = () => {
   const isMobile = width < 768;
 
   const [notification, setNotification] = useState({ message: '', type: '', show: false });
+  const [menuOpen, setMenuOpen] = useState(false);
   const { user, setUser } = useContext(AuthContext);
   const navigate = useNavigate();
 
@@ -54,6 +55,23 @@ const Rifa = () => {
     });
     return () => unsubscribe();
   }, []);
+
+  // Cerrar el menú al hacer clic fuera
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (menuOpen && !event.target.closest('.dropdown-menu')) {
+        setMenuOpen(false);
+      }
+    };
+    
+    if (menuOpen) {
+      document.addEventListener('click', handleClickOutside);
+    }
+    
+    return () => {
+      document.removeEventListener('click', handleClickOutside);
+    };
+  }, [menuOpen]);
 
   const showNotification = (message, type = 'success') => {
     setNotification({ message, type, show: true });
@@ -138,6 +156,7 @@ const Rifa = () => {
   const handleLogout = () => {
     setUser(null);
     setVendedor('');
+    setMenuOpen(false); // Cerrar el menú al hacer logout
     showNotification('Sesión cerrada.', 'success');
   };
 
@@ -175,34 +194,73 @@ const Rifa = () => {
       </div>
 
       {/* HEADER FUERA DEL CONTENEDOR PRINCIPAL */}
-      <header className="title-container">
-        <div className="logo-slot">
-          <a href="/" aria-label="Inicio">
-            <img
-              src={`${process.env.PUBLIC_URL}/logotexto.png`}
-              alt="Logotipo - Rifa"
-              title="ICINF"
-              className="header-logo"
-            />
-          </a>
-        </div>
-        <h1 className="title-center">Rifa Solidaria Ingeniería Civil Informática</h1>
-        <div className="login-slot">
-          {user ? (
-            <>
-              <span style={{ fontWeight: 600, marginRight: 8 }}>Hola, {user.displayName || user.username}</span>
-              <button className="carousel-button" onClick={handleLogout}>Cerrar sesión</button>
-            </>
-          ) : (
-            <button className="carousel-button" onClick={() => navigate('/login')}>Iniciar sesión</button>
-          )}
-        </div>
+      <header className={`title-container ${isMobile ? 'mobile-header' : ''}`}>
+        {isMobile ? (
+          // Vista móvil: Solo título y dropdown
+          <>
+            <h1 className="title-center mobile-title">Rifa Solidaria ICINF</h1>
+            <div className="dropdown-menu">
+              <button 
+                className="dropdown-toggle" 
+                onClick={() => setMenuOpen(!menuOpen)}
+                aria-label="Menú"
+              >
+                ☰
+              </button>
+              {menuOpen && (
+                <div className="dropdown-content">
+                  {user ? (
+                    <>
+                      <div className="dropdown-user">
+                        Hola, {user.displayName || user.username}
+                      </div>
+                      <button className="dropdown-item" onClick={handleLogout}>
+                        Cerrar sesión
+                      </button>
+                    </>
+                  ) : (
+                    <button className="dropdown-item" onClick={() => navigate('/login')}>
+                      Iniciar sesión
+                    </button>
+                  )}
+                </div>
+              )}
+            </div>
+          </>
+        ) : (
+          // Vista desktop: Layout original
+          <>
+            <div className="logo-slot">
+              <a href="/" aria-label="Inicio">
+                <img
+                  src={`${process.env.PUBLIC_URL}/logotexto.png`}
+                  alt="Logotipo - Rifa"
+                  title="ICINF"
+                  className="header-logo"
+                />
+              </a>
+            </div>
+            <h1 className="title-center">Rifa Solidaria Ingeniería Civil Informática</h1>
+            <div className="login-slot">
+              {user ? (
+                <>
+                  <span style={{ fontWeight: 600, marginRight: 8 }}>Hola, {user.displayName || user.username}</span>
+                  <button className="carousel-button" onClick={handleLogout}>Cerrar sesión</button>
+                </>
+              ) : (
+                <button className="carousel-button" onClick={() => navigate('/login')}>Iniciar sesión</button>
+              )}
+            </div>
+          </>
+        )}
       </header>
 
       {/* CONTENEDOR PRINCIPAL CON SCROLL */}
-      <div className="rifa-container">
+      <div className={`rifa-container ${user ? 'logged-in' : ''}`}>
         {/* SECCIÓN INFORMATIVA - PRIMERA PANTALLA */}
-        <div className="info-section">
+        {/* Ocultar cuando el usuario está logueado (tanto en móvil como desktop) */}
+        {!user && (
+          <div className="info-section">
           <div className="info-content">
             <div className="info-card">
               <h2>Sobre la Rifa</h2>
@@ -245,7 +303,8 @@ const Rifa = () => {
               </p>
             </div>
           </div>
-        </div>
+          </div>
+        )}
 
         {/* SECCIÓN DE LA TABLA - SEGUNDA PANTALLA */}
         <div className="rifa-content">
