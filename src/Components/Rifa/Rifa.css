@@ -1,12 +1,22 @@
 /* --- ESTILOS BASE (Mobile-First) --- */
 
+* {
+    box-sizing: border-box;
+}
+
 .rifa-container {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
     min-height: 100vh;
-    padding: 10px;
+    padding: 0; /* removed padding to allow header full width */
+}
+
+.rifa-content {
+    width: 100%;
+    max-width: 1200px;
+    padding: 10px; /* padding only for content, not header */
     box-sizing: border-box;
 }
 
@@ -15,21 +25,88 @@
     margin-bottom: 15px;
 }
 
-/* Contenedor principal del título modificado */
-.title-container {
-    display: flex;
-    flex-direction: column; /* Apila los elementos verticalmente */
-    align-items: center;
-    gap: 10px; /* Espacio entre el título y la barra de información */
-    width: 100%;
-    max-width: 500px;
-    margin-bottom: 15px;
-}
-
-.title-container h1 {
+/* El header se define más abajo con .title-container; estilos del h1 aplican a .title-center */
+.title-center {
     font-size: 1.5rem;
     text-align: center;
     margin: 0;
+}
+
+/* ====== HEADER ====== */
+.title-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    left: 0;
+    right: 0;
+    margin: 0;
+    gap: 20px;
+    padding: 15px 30px;
+    border-bottom: 2px solid #e0e0e0;
+    background-color: #ffffff;
+    box-sizing: border-box;
+}
+
+/* Logo */
+.logo-slot {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+}
+
+/* Título centrado */
+.title-center {
+    flex: 2;
+    text-align: center;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #333333;
+    margin: 0;
+}
+
+/* Login */
+.login-slot {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    flex: 1;
+}
+
+.logo-slot img {
+    display: block;
+    height: 140px; /* increased for larger logo */
+    width: auto;
+    object-fit: contain;
+}
+
+/* Make sure title stays centered by using absolute positioning trick on small screens */
+@media (max-width: 600px) {
+    .title-container {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding: 10px 15px;
+    }
+
+    .logo-slot,
+    .login-slot {
+        flex: unset;
+        margin: 5px 0;
+    }
+
+    .title-center {
+        font-size: 1.2rem;
+    }
+}
+
+/* Ensure pixel-perfect centered title on larger screens too */
+@media (min-width: 601px) {
+    .title-container {
+        position: relative;
+    }
 }
 
 /* NUEVO: Contenedor para el contador y el botón de descarga */
@@ -69,9 +146,27 @@
 
 .rifa-table-wrapper {
     width: 100%;
-    overflow-x: hidden;
+    max-width: 980px; /* match header max-width */
+    margin: 0 auto;
+    overflow-x: auto;
     border: 2px solid #333;
     border-radius: 8px;
+}
+
+.rifa-controls {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    max-width: 980px; /* match table width */
+    margin: 12px auto;
+    gap: 12px;
+    padding: 0 8px;
+}
+.rifa-controls > div {
+    margin: 0 auto; /* center the carousel group */
+}
+.rifa-controls .download-button {
+    margin-left: auto; /* push download to the right within the controls area */
 }
 
 .rifa-table {
@@ -178,6 +273,36 @@
     box-shadow: 0 4px 12px rgba(244, 67, 54, 0.4);
 }
 
+/* Estilos para controles del carrusel */
+.carousel-button {
+    padding: 6px 10px;
+    border-radius: 6px;
+    border: none;
+    background-color: #1976d2;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+.carousel-button:disabled {
+    background-color: #9e9e9e;
+    cursor: not-allowed;
+}
+
+/* Panel de login desplegable */
+.login-panel {
+    margin-top: 10px;
+    padding: 12px;
+    background: rgba(255,255,255,0.95);
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+}
+.login-panel input {
+    padding: 8px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}
+
 
 /* --- ESTILOS PARA ESCRITORIO (Computadores) --- */
 
@@ -190,11 +315,7 @@
         height: 150px;
     }
 
-    .title-container {
-        max-width: 700px; /* Ancho mayor para el contenedor del título en escritorio */
-    }
-
-    .title-container h1 {
+    .title-center {
         font-size: 2.2rem;
     }
 

@@ -1,19 +1,19 @@
 {
-  "short_name": "Rifa Toltén",
-  "name": "Rifa Club de Pesca Río Toltén",
+  "short_name": "Rifa Solidaria",
+  "name": "Rifa Solidaria Ingenieria Civil Informática",
   "icons": [
     {
-      "src": "Logo.ico",
+      "src": "Logo.png",
       "sizes": "64x64 32x32 24x24 16x16",
-      "type": "image/x-icon"
+      "type": "image/png"
     },
     {
-      "src": "logo192.png",
+      "src": "logotexto.png",
       "type": "image/png",
       "sizes": "192x192"
     },
     {
-      "src": "logo512.png",
+      "src": "logotexto.png",
       "type": "image/png",
       "sizes": "512x512"
     }
